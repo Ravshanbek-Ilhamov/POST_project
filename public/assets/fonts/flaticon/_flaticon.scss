@@ -1,0 +1,71 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 15/08/2017 04:26
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-01bag:before { content: "\f100"; }
+.flaticon-02bag:before { content: "\f101"; }
+.flaticon-03heart:before { content: "\f102"; }
+.flaticon-04compare:before { content: "\f103"; }
+.flaticon-05search:before { content: "\f104"; }
+.flaticon-06user:before { content: "\f105"; }
+.flaticon-07bag:before { content: "\f106"; }
+.flaticon-08menu:before { content: "\f107"; }
+.flaticon-09transport:before { content: "\f108"; }
+.flaticon-10clock:before { content: "\f109"; }
+.flaticon-11close:before { content: "\f10a"; }
+.flaticon-12close:before { content: "\f10b"; }
+.flaticon-13close:before { content: "\f10c"; }
+.flaticon-14close:before { content: "\f10d"; }
+.flaticon-15arrow:before { content: "\f10e"; }
+.flaticon-16mail:before { content: "\f10f"; }
+    
+    $font-Flaticon-01bag: "\f100";
+    $font-Flaticon-02bag: "\f101";
+    $font-Flaticon-03heart: "\f102";
+    $font-Flaticon-04compare: "\f103";
+    $font-Flaticon-05search: "\f104";
+    $font-Flaticon-06user: "\f105";
+    $font-Flaticon-07bag: "\f106";
+    $font-Flaticon-08menu: "\f107";
+    $font-Flaticon-09transport: "\f108";
+    $font-Flaticon-10clock: "\f109";
+    $font-Flaticon-11close: "\f10a";
+    $font-Flaticon-12close: "\f10b";
+    $font-Flaticon-13close: "\f10c";
+    $font-Flaticon-14close: "\f10d";
+    $font-Flaticon-15arrow: "\f10e";
+    $font-Flaticon-16mail: "\f10f";
