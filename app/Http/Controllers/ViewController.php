@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreViewRequest;
 use App\Http\Requests\UpdateViewRequest;
+use App\Models\Post;
+use App\Models\User;
 use App\Models\View;
 
 class ViewController extends Controller
@@ -14,7 +16,9 @@ class ViewController extends Controller
     public function index()
     {
         $views = View::paginate(15);
-        return view('admin.view.view',['views'=>$views]);
+        $posts = Post::all();
+        $users = User::all();
+        return view('admin.view.view',['views'=>$views,'posts'=>$posts,'users'=>$users]);
     }
 
     /**
@@ -30,7 +34,13 @@ class ViewController extends Controller
      */
     public function store(StoreViewRequest $request)
     {
-        //
+        $view = new View();
+
+        $view->post_id = $request->post_id;
+        $view->user_IP = $request->user_IP;
+
+        $view->save();
+        return redirect()->route('view.index')->with('success','View added successfully');
     }
 
     /**
@@ -54,7 +64,11 @@ class ViewController extends Controller
      */
     public function update(UpdateViewRequest $request, View $view)
     {
-        //
+        $view->update([
+            'post_id' => $request->post_id,
+            'user_IP' => $request->user_IP,
+        ]);
+        return redirect()->route('view.index')->with('success','View updated successfully');
     }
 
     /**
@@ -62,6 +76,10 @@ class ViewController extends Controller
      */
     public function destroy(View $view)
     {
-        //
+        if($view){
+            $view->delete();
+            return redirect()->route('view.index')->with('success','View deleted successfully');
+        }
+        return redirect()->route('view.index')->with('success','Error While Deleting View');
     }
 }

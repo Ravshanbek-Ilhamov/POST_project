@@ -37,8 +37,8 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
-                        <th>Post ID</th>
-                        <th>User ID</th>
+                        <th>Post</th>
+                        <th>User</th>
                         <th>Body</th>
                         @if (auth()->user())
                             <th>Actions</th>
@@ -47,10 +47,11 @@
                 </thead>
                 <tbody>
                     @foreach ($comments as $item)
+                        {{$item->posts}}
                         <tr>
                             <td>{{ $item->id }}</td>
-                            <td>{{ $item->post_id }}</td>
-                            <td>{{ $item->user_id }}</td>
+                            <td>{{ $item->post->title }}</td>
+                            <td>{{ $item->user->name }}</td>
                             <td>{{ $item->text }}</td>
                             @if (auth()->user())
                                 <td>

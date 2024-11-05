@@ -13,4 +13,8 @@ class View extends Model
         'post_id',
         'user_IP'
     ];
-}
+
+    public function post(){
+        return $this->belongsTo(Post::class,'post_id');
+    }
+}         

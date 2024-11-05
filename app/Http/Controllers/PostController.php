@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Category;
+use App\Models\Comment;
+use App\Models\LikeOrDislike;
 use App\Models\Post;
+use App\Models\View;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -47,10 +51,9 @@ class PostController extends Controller
     
         Post::create($validatedData);
     
-        return redirect()->route('posts.index')->with('success', 'Post created successfully!');
+        return redirect()->route('post.index')->with('success', 'Post created successfully!');
     }
     
-
     /**
      * Display the specified resource.
      */
@@ -103,15 +106,94 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        try {
+        try{
             if ($post) {
                 $post->delete();
                 return redirect()->back()->with('success', 'Post deleted successfully');
             }
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to delete post');
         }
-    
         return redirect()->back()->with('error', 'Post not found');
     }
+
+    // use Carbon\Carbon;
+
+    public function detailing(Request $request, Post $post)
+    {
+        $categories = Category::all();
+        $comments = $post->comments()->paginate(5);
+    
+        $hasLiked = LikeOrDislike::where('post_id', $post->id)
+            ->where('user_id', auth()->id())
+            ->where('value', 1)
+            ->exists();
+    
+        $hasDisliked = LikeOrDislike::where('post_id', $post->id)
+            ->where('user_id', auth()->id())
+            ->where('value', 0)
+            ->exists();
+    
+        $view = View::where('post_id', $post->id)
+            ->where('user_IP', $request->ip())
+            ->first();
+    
+        if (!$view || $view->updated_at->diffInMinutes(now()) >= 30) {
+            View::create([
+                'post_id' => $post->id,
+                'user_IP' => $request->ip(),
+            ]);
+            $post->increment('number_view');
+        }
+    
+        return view('user.post_details', [
+            'post' => $post,
+            'categories' => $categories,
+            'comments' => $comments,
+            'hasLiked' => $hasLiked,
+            'hasDisliked' => $hasDisliked
+        ]);
+    }
+    
+
+    public function storeReaction(Request $request){
+
+        $post = Post::find($request->post_id);
+
+        if ($post) {
+            if ($request->reaction === 'like') {
+                $post->increment('likes');
+            } elseif ($request->reaction === 'dislike') {
+                $post->increment('dislikes');
+            }
+            $post->save();
+
+            return response()->json([
+                'likes' => $post->likes,
+                'dislikes' => $post->dislikes
+            ]);
+        }
+
+        return response()->json(['error' => 'Post not found'], 404);
+    }
+
+    public function storeLikes(Request $request){
+        dd($request->all());
+    }
+
+    public function category($categoryName)
+    {
+        // dd($categoryName);  
+        $category = Category::where('name', $categoryName)->first();
+    
+        if (!$category) {
+            abort(404, 'Category not found');
+        }
+    
+        $posts = Post::where('category_id', $category->id)->paginate(10);
+    
+        return view('user.userPage', compact('posts', 'category'));
+    }
+    
+
 }

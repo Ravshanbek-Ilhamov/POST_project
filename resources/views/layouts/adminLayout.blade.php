@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard 2</title>
+  <title>@yield('title')</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -26,6 +27,10 @@
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="/posts" class="nav-link">Home</a>
+      </li>
+
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/user-page" class="nav-link">User Page</a>
       </li>
 
     </ul>
@@ -126,6 +131,35 @@
               Posts
             </p>
           </a>
+
+          <a href="/views" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Views
+            </p>
+          </a>
+
+          <a href="/requests" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Requests
+            </p>
+          </a>
+
+          <a href="/options" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Options
+            </p>
+          </a>
+
+          <a href="/answers" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Answers
+            </p>
+          </a>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

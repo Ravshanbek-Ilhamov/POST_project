@@ -26,7 +26,10 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             CommentSeeder::class,
             ViewSeeder::class,
-            LikeOrDislikeSeeder::class
+            LikeOrDislikeSeeder::class,
+            RequestSeeder::class,
+            OptionsSeeder::class,
+            AnswerSeeder::class,
         ]);
     }
 }

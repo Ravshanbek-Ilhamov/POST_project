@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +19,7 @@ class AuthController extends Controller
         ]);
     
         if (auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect('/category')->with('success', 'You are logged in!');
+            return redirect('/user-page')->with('success', 'You are logged in!');
         }else{
             return redirect()->back()->with('error', 'Invalid email or password.');
         }
@@ -34,12 +36,12 @@ class AuthController extends Controller
     }
 
     public function register(Request $request){
-        // dd($request->all());
         try {
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
+            $user->IP_address = $request->ip();
             $user->save();
     
             return redirect('/')->with('success', 'User Registered successfully. Please Login!');
@@ -52,5 +54,18 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/posts')->with('success', 'You have been logged out.');
     }
+
+
+    public function userPage(){
+        $categories = Category::all();
+        $posts = Post::paginate(9);
+        return view('user.userPage',[
+
+            'categories'=>$categories,
+            'posts'=>$posts
+        ]);
+    }
+
+    
 
 }

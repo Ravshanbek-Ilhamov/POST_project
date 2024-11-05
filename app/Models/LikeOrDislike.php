@@ -14,4 +14,12 @@ class LikeOrDislike extends Model
         'user_id',
         'value'
     ];
+
+    public function posts(){
+        return $this->belongsTo(Post::class,'post_id');
+    }
+    
+    public function users(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
